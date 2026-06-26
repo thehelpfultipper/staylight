@@ -76,6 +76,7 @@ export function CheckoutForm({
     }
 
     setIsSubmitting(true);
+    let navigated = false;
 
     try {
       const response = await fetch("/api/bookings", {
@@ -99,13 +100,16 @@ export function CheckoutForm({
 
       const body = (await response.json()) as { data: BookingConfirmation };
       storeBookingConfirmation(body.data);
+      navigated = true;
       router.push(`/booking-confirmed/${body.data.bookingId}`);
     } catch (error) {
       setSubmitError(
         error instanceof Error ? error.message : "Could not complete booking",
       );
     } finally {
-      setIsSubmitting(false);
+      if (!navigated) {
+        setIsSubmitting(false);
+      }
     }
   }
 

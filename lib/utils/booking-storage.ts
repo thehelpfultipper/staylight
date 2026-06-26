@@ -32,7 +32,3 @@ export function parseBookingConfirmation(
     return null;
   }
 }
-
-export function subscribeToBookingStorage(): () => void {
-  return () => {};
-}

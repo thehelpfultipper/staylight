@@ -1,41 +1,38 @@
 "use client";
 
 import Link from "next/link";
-import { Suspense, useMemo, useSyncExternalStore } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { Badge } from "@/components/ui/Badge";
+import { Card } from "@/components/ui/Card";
+import { LoadingSkeleton } from "@/components/ui/LoadingSkeleton";
 import {
   getBookingConfirmationSnapshot,
   parseBookingConfirmation,
-  subscribeToBookingStorage,
 } from "@/lib/utils/booking-storage";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
-import { LoadingSkeleton } from "@/components/ui/LoadingSkeleton";
 import { formatDisplayDate } from "@/lib/utils/dates";
 import { formatCurrency } from "@/lib/utils/money";
+import type { BookingConfirmation } from "@/types/api";
 
 function ConfirmationLoading() {
   return (
-    <div className="mx-auto max-w-xl space-y-6" role="status" aria-label="Loading confirmation">
+    <div
+      className="mx-auto max-w-xl space-y-6"
+      role="status"
+      aria-label="Loading confirmation"
+    >
       <LoadingSkeleton className="mx-auto h-16 w-16 rounded-full" />
-      <LoadingSkeleton className="h-10 w-2/3 mx-auto" />
+      <LoadingSkeleton className="mx-auto h-10 w-2/3" />
       <LoadingSkeleton className="h-64 w-full rounded-3xl" />
     </div>
   );
 }
 
-function ConfirmationContent() {
+function ConfirmationDetails() {
   const params = useParams<{ bookingId: string }>();
   const bookingId = params.bookingId;
-  const confirmationRaw = useSyncExternalStore(
-    subscribeToBookingStorage,
-    () => getBookingConfirmationSnapshot(bookingId),
-    () => null,
-  );
-  const confirmation = useMemo(
-    () => parseBookingConfirmation(confirmationRaw),
-    [confirmationRaw],
+  const [confirmation] = useState<BookingConfirmation | null>(() =>
+    parseBookingConfirmation(getBookingConfirmationSnapshot(bookingId)),
   );
 
   const hasSessionDetails = confirmation !== null;
@@ -136,28 +133,55 @@ function ConfirmationContent() {
             </dl>
           ) : (
             <p className="text-sm text-muted">
-              Reference <span className="font-medium text-foreground">{bookingId}</span>{" "}
-              was recorded, but trip details could not be loaded from this browser
-              session.
+              Reference{" "}
+              <span className="font-medium text-foreground">{bookingId}</span>{" "}
+              was recorded, but trip details could not be loaded from this
+              browser session.
             </p>
           )}
         </div>
       </Card>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-        <Link href="/">
-          <Button variant="secondary" fullWidth className="sm:w-auto">
-            Back to home
-          </Button>
+        <Link
+          href="/"
+          className="inline-flex h-11 items-center justify-center rounded-2xl border border-border-strong bg-surface px-5 text-sm font-medium tracking-tight text-foreground transition-opacity hover:bg-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground sm:w-auto"
+        >
+          Back to home
         </Link>
-        <Link href="/stays">
-          <Button variant="primary" fullWidth className="sm:w-auto">
-            Browse more stays
-          </Button>
+        <Link
+          href="/stays"
+          className="inline-flex h-11 items-center justify-center rounded-2xl bg-foreground px-5 text-sm font-medium tracking-tight text-background transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground sm:w-auto"
+        >
+          Browse more stays
         </Link>
       </div>
     </div>
   );
+}
+
+function ConfirmationContent() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+
+    queueMicrotask(() => {
+      if (active) {
+        setReady(true);
+      }
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  if (!ready) {
+    return <ConfirmationLoading />;
+  }
+
+  return <ConfirmationDetails />;
 }
 
 export default function BookingConfirmedPage() {
