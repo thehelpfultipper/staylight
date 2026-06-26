@@ -1,0 +1,56 @@
+---
+description: Staylight visual design — premium minimalist Apple-inspired aesthetic
+globs: "**/*.{tsx,css}"
+alwaysApply: false
+---
+
+# Staylight — Design System
+
+## Aesthetic
+
+Minimalist **ultra-premium Apple-inspired 2026** — feels like an Apple product page + boutique hotel editorial + clean booking checkout.
+
+**Avoid** generic dashboard UI, dense data tables, and heavy component libraries (unless already installed).
+
+## Color & Surface
+
+- **Background**: warm off-white (e.g. `#FAF9F7` or similar)
+- **Cards**: white or soft glass (`backdrop-blur`, low-opacity white overlay)
+- **Primary action**: deep charcoal/black buttons
+- **Secondary text**: muted gray
+- **Borders**: subtle, low-contrast
+- **Shadows**: soft, layered — never harsh drop shadows
+
+## Layout & Shape
+
+- **Large rounded corners**: 20px+ (`rounded-2xl`, `rounded-3xl`)
+- **Spacious**: generous padding and whitespace; avoid cramped grids
+- **Typography**: system font stack (`font-sans` with system-ui fallbacks)
+- **Hierarchy**: large confident headings, restrained body copy
+
+## Interaction
+
+- Smooth but **subtle** hover transitions (`transition-colors`, `transition-shadow`)
+- **Clear visible focus rings** on all interactive elements — never remove outline without replacement
+- Disabled states: reduced opacity, no pointer events
+
+## Component Patterns
+
+- Search bar: prominent, pill or large rounded input
+- Stay cards: image-forward, minimal metadata, Smart Match badge/score
+- Checkout: step clarity, mocked payment section with explicit "demo" labeling
+- States: skeleton loaders matching card shapes; empty states with helpful copy
+
+## Tailwind Tokens (suggested)
+
+Define in `globals.css` or `tailwind.config` as CSS variables:
+
+```css
+--color-bg: #FAF9F7;
+--color-surface: #FFFFFF;
+--color-primary: #1A1A1A;
+--color-muted: #6B6B6B;
+--radius-card: 1.25rem;
+```
+
+Use Tailwind utilities; avoid inline styles except for one-off values.

@@ -1,0 +1,42 @@
+---
+description: Staylight project objective, stack, and core user capabilities
+alwaysApply: true
+---
+
+# Staylight — Project Objective
+
+Build a **small premium travel booking app** inspired by Booking.com — not a clone.
+
+## Stack
+
+- **React + TypeScript** with **Next.js App Router**
+- Frontend talks to a **small backend API** via internal Next.js API route handlers (`app/api`)
+- **Seeded mock data only** — no real database, payments, auth, or external travel APIs
+
+## Differentiator: Smart Match
+
+- Rule-based **backend-generated score + explanation** for why a stay fits a search
+- Implemented in `lib/smart-match` — **no AI integration**
+
+## Core User Capabilities
+
+1. Search or browse available stays
+2. View stay details
+3. View and add reviews/comments
+4. Display pricing and availability
+5. Complete **mocked checkout** and receive a confirmed booking
+6. Payment must be **clearly mocked** (labels, copy, UI cues)
+
+## Quality Bar
+
+- Responsive design
+- Loading, empty, error, and success states on all async flows
+- Basic accessibility (semantic HTML, keyboard nav, focus management, ARIA where needed)
+- A few meaningful tests (not exhaustive)
+- Simple CI via GitHub Actions
+- Production build process
+- Basic API logging/observability
+
+## Priority
+
+Complete the **full booking flow** end-to-end before polishing extras.

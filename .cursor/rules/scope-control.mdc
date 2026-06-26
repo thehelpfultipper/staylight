@@ -1,0 +1,33 @@
+---
+description: Staylight out-of-scope guardrails — do not add these features
+alwaysApply: true
+---
+
+# Staylight — Scope Control
+
+**Hard constraints.** Do not add these unless the user explicitly requests them in a future session:
+
+| Out of scope | Reason |
+|---|---|
+| Authentication / user accounts | Mock app; no login |
+| Real payments (Stripe, etc.) | Mocked checkout only |
+| Maps (Google Maps, Mapbox) | Not required |
+| Admin dashboard | Out of scope |
+| Host dashboard | Out of scope |
+| Saved favorites / wishlists | Out of scope |
+| Messaging / chat | Out of scope |
+| AI chat / LLM integration | Smart Match is rule-based only |
+| External travel APIs | Seeded data only |
+| Real database (Postgres, Supabase, etc.) | Seed data in `lib/data` |
+
+## When in Doubt
+
+- Keep data **seeded and simple** (in-memory or file-based mutations during a session are OK; persist to seed module if needed for demo continuity)
+- **Prioritize the full booking flow** over new features
+- A feature not listed in project-objective is likely out of scope — ask before building
+
+## Allowed Mock Behaviors
+
+- Simulated payment form with fake card fields and a "Complete booking (demo)" CTA
+- Booking confirmation with generated reference number
+- Adding a review appends to in-memory/seed data for the session

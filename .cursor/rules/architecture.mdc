@@ -1,0 +1,49 @@
+---
+description: Staylight folder structure, layering, and technical conventions
+alwaysApply: true
+---
+
+# Staylight — Architecture
+
+## Stack
+
+Next.js App Router · TypeScript · Tailwind CSS
+
+## Directory Layout
+
+| Path | Purpose |
+|------|---------|
+| `app/` | Pages, layouts, route segments (App Router) |
+| `app/api/` | API route handlers (backend) |
+| `lib/data/` | Seeded mock data (JSON/TS modules) |
+| `lib/services/` | Business logic (stays, bookings, reviews, search) |
+| `lib/smart-match/` | Smart Match scoring engine |
+| `types/` | Shared TypeScript types/interfaces |
+| `components/` | Reusable UI components |
+
+## Layering Rules
+
+- **API routes** validate input, call services, return JSON — keep handlers thin
+- **Services** own business logic; never import React or UI code
+- **Smart Match** is pure rule-based logic; consumed by search/listing services
+- **Components** fetch via API routes or receive server-fetched props — no direct seed imports in client components
+- **Types** are the single source of truth for domain models (`Stay`, `Booking`, `Review`, `SearchParams`, etc.)
+
+## API Conventions
+
+- REST-style routes under `app/api/` (e.g. `stays`, `stays/[id]`, `bookings`, `reviews`)
+- Return consistent error shapes: `{ error: string }` with appropriate HTTP status
+- Log requests/responses at info level; log errors with context (route, params, message)
+
+## Principles
+
+- **Do not over-engineer** — no repository pattern, no DI framework, no ORM
+- Prefer plain functions and modules over classes
+- Colocate route-specific UI in `app/`; extract only when reused
+- Use Next.js server components where data fetching is straightforward; client components for interactivity
+
+## Testing
+
+- Unit tests for Smart Match and key service functions
+- One or two integration/smoke tests for critical API routes
+- Keep test setup minimal (Vitest or Jest — match scaffold choice)
