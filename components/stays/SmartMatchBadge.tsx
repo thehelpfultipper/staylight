@@ -59,8 +59,8 @@ export function SmartMatchBadge({ smartMatch, className }: SmartMatchBadgeProps)
         >
           {visibleReasons.map((reason) => (
             <li key={reason} className="flex gap-2">
-              <span aria-hidden className="shrink-0 font-medium text-foreground">
-                +
+              <span aria-hidden className="shrink-0 text-muted">
+                ·
               </span>
               <span>{reason}</span>
             </li>

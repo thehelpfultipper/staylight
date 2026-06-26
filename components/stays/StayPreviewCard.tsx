@@ -35,7 +35,7 @@ export function StayPreviewCard({ stay, searchHref }: StayPreviewCardProps) {
           {stay.imageUrl ? (
             <Image
               src={stay.imageUrl}
-              alt={`${stay.name} in ${stay.city}`}
+              alt=""
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"

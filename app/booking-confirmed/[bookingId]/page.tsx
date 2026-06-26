@@ -144,11 +144,11 @@ function ConfirmationDetails() {
         </div>
       </Card>
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-        <LinkButton href="/" variant="secondary" className="sm:min-w-[140px]">
+      <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <LinkButton href="/" variant="secondary">
           Back to home
         </LinkButton>
-        <LinkButton href="/stays" variant="primary" className="sm:min-w-[180px]">
+        <LinkButton href="/stays" variant="primary">
           Browse more stays
         </LinkButton>
       </div>

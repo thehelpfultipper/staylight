@@ -58,7 +58,7 @@ export function StayCard({ result, detailHref }: StayCardProps) {
           )}
         </div>
 
-        <div className="flex min-w-0 flex-1 flex-col gap-5 p-5 sm:p-6 lg:p-8">
+        <div className="flex min-w-0 flex-1 flex-col gap-5 p-6 lg:p-8">
           <div className="space-y-2">
             <h2 className="text-xl font-semibold tracking-tight text-foreground">
               {stay.name}
@@ -105,7 +105,7 @@ export function StayCard({ result, detailHref }: StayCardProps) {
           </p>
         </div>
 
-        <div className="flex flex-col justify-between gap-5 border-t border-border p-5 sm:p-6 lg:w-56 lg:border-l lg:border-t-0 lg:p-8 xl:w-64">
+        <div className="flex flex-col justify-between gap-5 border-t border-border p-6 lg:w-56 lg:border-l lg:border-t-0 xl:w-64">
           <div className="space-y-1">
             <p className="text-lg font-semibold tabular-nums text-foreground">
               {formatCurrency(stay.pricePerNight)}

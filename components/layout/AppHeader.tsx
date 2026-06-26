@@ -3,7 +3,7 @@ import Link from "next/link";
 export function AppHeader() {
   return (
     <header className="border-b border-border bg-surface/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 sm:px-8">
         <Link
           href="/"
           className="text-lg font-semibold tracking-tight text-foreground transition-opacity hover:opacity-70"
