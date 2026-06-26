@@ -33,3 +33,40 @@ export interface Stay {
   availability: AvailabilityRange[];
   reviews: Review[];
 }
+
+/** Fields commonly shown on stay listing cards. */
+export interface StayCard {
+  id: string;
+  name: string;
+  city: string;
+  country: string;
+  stayType: StayType;
+  description: string;
+  pricePerNight: number;
+  rating: number;
+  reviewCount: number;
+  distanceFromCenterKm: number;
+  maxGuests: number;
+  amenities: string[];
+  freeCancellation: boolean;
+  imageUrl: string;
+}
+
+export function toStayCard(stay: Stay): StayCard {
+  return {
+    id: stay.id,
+    name: stay.name,
+    city: stay.city,
+    country: stay.country,
+    stayType: stay.stayType,
+    description: stay.description,
+    pricePerNight: stay.pricePerNight,
+    rating: stay.rating,
+    reviewCount: stay.reviewCount,
+    distanceFromCenterKm: stay.distanceFromCenterKm,
+    maxGuests: stay.maxGuests,
+    amenities: stay.amenities,
+    freeCancellation: stay.freeCancellation,
+    imageUrl: stay.images[0] ?? "",
+  };
+}
