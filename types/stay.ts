@@ -47,6 +47,7 @@ export interface StayCard {
   reviewCount: number;
   distanceFromCenterKm: number;
   maxGuests: number;
+  availableRooms: number;
   amenities: string[];
   freeCancellation: boolean;
   imageUrl: string;
@@ -65,6 +66,7 @@ export function toStayCard(stay: Stay): StayCard {
     reviewCount: stay.reviewCount,
     distanceFromCenterKm: stay.distanceFromCenterKm,
     maxGuests: stay.maxGuests,
+    availableRooms: stay.availableRooms,
     amenities: stay.amenities,
     freeCancellation: stay.freeCancellation,
     imageUrl: stay.images[0] ?? "",

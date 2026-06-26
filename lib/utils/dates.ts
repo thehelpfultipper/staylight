@@ -21,6 +21,16 @@ export function parseDate(value: string): Date {
   return date;
 }
 
+export function formatDisplayDate(isoDate: string): string {
+  const date = parseDate(isoDate);
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(date);
+}
+
 export function getNightCount(checkIn: string, checkOut: string): number {
   const start = parseDate(checkIn);
   const end = parseDate(checkOut);
