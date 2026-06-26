@@ -108,8 +108,9 @@ export function ReviewForm({ stayId, onReviewAdded }: ReviewFormProps) {
   return (
     <form
       onSubmit={(event) => void handleSubmit(event)}
-      className="space-y-5 rounded-2xl border border-border bg-surface p-6"
+      className="space-y-5 rounded-2xl border border-border bg-surface p-5 sm:p-6"
       aria-busy={isSubmitting}
+      aria-label="Write a review"
       noValidate
     >
       <div>

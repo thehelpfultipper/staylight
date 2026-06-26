@@ -1,10 +1,18 @@
-export default function CheckoutPage() {
+import { LinkButton } from "@/components/ui/Button";
+import { EmptyState } from "@/components/ui/EmptyState";
+
+export default function CheckoutIndexPage() {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-16 sm:px-8">
-      <h1 className="text-3xl font-semibold tracking-tight text-foreground">
-        Checkout
-      </h1>
-      <p className="mt-4 text-muted">Mock checkout flow coming soon.</p>
+    <div className="page-container">
+      <EmptyState
+        title="Select a stay to checkout"
+        description="Checkout opens from a stay detail page after you choose dates and guests."
+        action={
+          <LinkButton href="/stays" variant="primary">
+            Browse stays
+          </LinkButton>
+        }
+      />
     </div>
   );
 }

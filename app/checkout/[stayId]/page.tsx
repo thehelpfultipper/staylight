@@ -6,7 +6,7 @@ import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import { CheckoutForm } from "@/components/checkout/CheckoutForm";
 import { PriceBreakdown } from "@/components/checkout/PriceBreakdown";
-import { Button } from "@/components/ui/Button";
+import { LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
@@ -22,13 +22,14 @@ function parseGuests(value: string | null): number {
 
 function CheckoutLoading() {
   return (
-    <div className="space-y-8" role="status" aria-label="Loading checkout">
-      <LoadingSkeleton className="h-10 w-1/3" />
+    <div className="space-y-8" role="status" aria-live="polite" aria-busy="true">
+      <span className="sr-only">Loading checkout</span>
+      <LoadingSkeleton decorative className="h-10 w-1/3" />
       <div className="grid gap-8 lg:grid-cols-5">
         <div className="order-2 space-y-6 lg:order-1 lg:col-span-3">
-          <LoadingSkeleton className="h-96 w-full rounded-3xl" />
+          <LoadingSkeleton decorative className="h-96 w-full rounded-3xl" />
         </div>
-        <LoadingSkeleton className="order-1 h-80 w-full rounded-3xl lg:order-2 lg:col-span-2" />
+        <LoadingSkeleton decorative className="order-1 h-80 w-full rounded-3xl lg:order-2 lg:col-span-2" />
       </div>
     </div>
   );
@@ -144,13 +145,13 @@ function CheckoutContent() {
         title="Select your dates first"
         description="Checkout needs check-in and check-out dates. Head back to the stay page or search to pick dates and try again."
         action={
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <Link href={`/stays/${stayId}`}>
-              <Button variant="primary">Back to stay details</Button>
-            </Link>
-            <Link href="/stays">
-              <Button variant="secondary">Browse stays</Button>
-            </Link>
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
+            <LinkButton href={`/stays/${stayId}`} variant="primary">
+              Back to stay details
+            </LinkButton>
+            <LinkButton href="/stays" variant="secondary">
+              Browse stays
+            </LinkButton>
           </div>
         }
       />
@@ -191,7 +192,7 @@ function CheckoutContent() {
             <div className="overflow-hidden rounded-2xl">
               <Image
                 src={stay.images[0]}
-                alt=""
+                alt={`${stay.name} in ${stay.city}`}
                 width={640}
                 height={360}
                 className="aspect-[16/10] w-full object-cover"
@@ -237,7 +238,7 @@ function CheckoutContent() {
 
 export default function CheckoutPage() {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12 sm:px-8 sm:py-16">
+    <div className="page-container">
       <Suspense fallback={<CheckoutLoading />}>
         <CheckoutContent />
       </Suspense>

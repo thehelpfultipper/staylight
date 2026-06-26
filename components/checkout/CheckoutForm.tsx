@@ -118,6 +118,7 @@ export function CheckoutForm({
       onSubmit={(event) => void handleSubmit(event)}
       className="space-y-8"
       aria-busy={isSubmitting}
+      aria-label="Complete booking"
       noValidate
     >
       <section aria-labelledby="guest-details-heading" className="space-y-5">

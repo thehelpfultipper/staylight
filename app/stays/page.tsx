@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { Suspense, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { SearchSummary } from "@/components/search/SearchSummary";
 import { StayCard } from "@/components/stays/StayCard";
-import { Button } from "@/components/ui/Button";
+import { LinkButton } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { LoadingSkeleton } from "@/components/ui/LoadingSkeleton";
@@ -49,18 +48,19 @@ function buildStayDetailHref(
 
 function ResultsLoading() {
   return (
-    <div className="space-y-6" role="status" aria-label="Loading search results">
-      <LoadingSkeleton className="h-24 w-full rounded-3xl" />
+    <div className="space-y-6" role="status" aria-live="polite" aria-busy="true">
+      <span className="sr-only">Loading search results</span>
+      <LoadingSkeleton decorative className="h-24 w-full rounded-3xl" />
       {Array.from({ length: 3 }, (_, index) => (
         <div
           key={index}
           className="overflow-hidden rounded-3xl border border-border bg-surface shadow-soft"
         >
-          <LoadingSkeleton className="aspect-[16/10] rounded-none lg:h-56 lg:w-72" />
+          <LoadingSkeleton decorative className="aspect-[16/10] rounded-none lg:h-56 lg:w-72" />
           <div className="space-y-3 p-6">
-            <LoadingSkeleton className="h-6 w-2/3" />
-            <LoadingSkeleton className="h-4 w-1/2" />
-            <LoadingSkeleton className="h-20 w-full" />
+            <LoadingSkeleton decorative className="h-6 w-2/3" />
+            <LoadingSkeleton decorative className="h-4 w-1/2" />
+            <LoadingSkeleton decorative className="h-20 w-full" />
           </div>
         </div>
       ))}
@@ -183,9 +183,9 @@ function StaysSearchResultsContent({
         title="Start with a search"
         description="Choose a destination, dates, and guests to see stays ranked by Smart Match."
         action={
-          <Link href="/">
-            <Button variant="primary">Back to search</Button>
-          </Link>
+          <LinkButton href="/" variant="primary">
+            Back to search
+          </LinkButton>
         }
       />
     );
@@ -217,9 +217,9 @@ function StaysSearchResultsContent({
           title="No stays match your search"
           description="Try different dates, a higher budget, or another destination like Paris, New York, Barcelona, or Tokyo."
           action={
-            <Link href="/">
-              <Button variant="secondary">Modify search</Button>
-            </Link>
+            <LinkButton href="/" variant="secondary">
+              Modify search
+            </LinkButton>
           }
         />
       ) : (
@@ -253,7 +253,7 @@ function StaysSearchResults() {
 
 export default function StaysPage() {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12 sm:px-8 sm:py-16">
+    <div className="page-container">
       <header className="mb-10">
         <p className="text-sm font-medium uppercase tracking-widest text-muted">
           Smart Match results

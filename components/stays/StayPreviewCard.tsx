@@ -25,13 +25,17 @@ export function StayPreviewCard({ stay, searchHref }: StayPreviewCardProps) {
     `/stays?destination=${encodeURIComponent(stay.city)}&guests=2&tripType=leisure`;
 
   return (
-    <Link href={href} className="group block focus-visible:outline-none">
+    <Link
+      href={href}
+      aria-label={`View ${stay.name} in ${stay.city}`}
+      className="group block focus-visible:outline-none"
+    >
       <Card padding="none" className="overflow-hidden transition-shadow hover:shadow-soft-lg">
         <div className="relative aspect-[4/3] overflow-hidden bg-border">
           {stay.imageUrl ? (
             <Image
               src={stay.imageUrl}
-              alt=""
+              alt={`${stay.name} in ${stay.city}`}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"

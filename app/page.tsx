@@ -14,23 +14,23 @@ export default function Home() {
     .map(toStayCard);
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-16 sm:px-8 sm:py-24">
+    <div className="page-container sm:py-16 lg:py-24">
       {/* Hero */}
-      <section className="mb-16 text-center sm:mb-20 sm:text-left">
-        <Badge variant="muted" className="mb-5 uppercase tracking-widest">
+      <section className="mb-12 text-center sm:mb-16 sm:text-left lg:mb-20">
+        <Badge variant="muted" className="mb-4 uppercase tracking-widest sm:mb-5">
           Premium travel, thoughtfully matched
         </Badge>
-        <h1 className="mx-auto max-w-2xl text-4xl font-semibold leading-tight tracking-tight text-foreground sm:mx-0 sm:text-5xl sm:leading-tight">
+        <h1 className="mx-auto max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-foreground sm:mx-0 sm:text-4xl lg:text-5xl lg:leading-tight">
           Find stays that fit the way you travel.
         </h1>
-        <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted sm:mx-0">
+        <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted sm:mx-0 sm:mt-6 sm:text-lg">
           Search boutique hotels, apartments, and retreats — ranked by Smart
           Match so you know why each stay fits before you book.
         </p>
       </section>
 
       {/* Search */}
-      <section aria-labelledby="search-heading" className="mb-20">
+      <section aria-labelledby="search-heading" className="mb-16 lg:mb-20">
         <h2 id="search-heading" className="sr-only">
           Search stays
         </h2>
@@ -59,7 +59,7 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
           {featuredStays.map((stay) => (
             <StayPreviewCard key={stay.id} stay={stay} />
           ))}

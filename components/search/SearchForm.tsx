@@ -216,11 +216,11 @@ export function SearchForm() {
           />
         </div>
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-muted">
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-center text-sm text-muted sm:text-left">
             Smart Match will rank results for your trip.
           </p>
-          <Button type="submit" size="lg" className="sm:min-w-[160px]">
+          <Button type="submit" size="lg" className="w-full sm:w-auto sm:min-w-[160px]">
             Search stays
           </Button>
         </div>

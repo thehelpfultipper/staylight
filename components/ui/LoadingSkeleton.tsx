@@ -3,24 +3,25 @@ import { cn } from "@/lib/utils/cn";
 export type LoadingSkeletonProps = React.HTMLAttributes<HTMLDivElement> & {
   /** Accessible label for screen readers */
   label?: string;
+  /** When true, skeleton is decorative inside a parent loading region */
+  decorative?: boolean;
 };
 
 export function LoadingSkeleton({
   label = "Loading",
+  decorative = false,
   className,
   ...props
 }: LoadingSkeletonProps) {
   return (
     <div
-      role="status"
-      aria-label={label}
-      className={cn(
-        "animate-pulse rounded-2xl bg-border",
-        className,
-      )}
+      role={decorative ? undefined : "status"}
+      aria-hidden={decorative ? true : undefined}
+      aria-label={decorative ? undefined : label}
+      className={cn("animate-pulse rounded-2xl bg-border", className)}
       {...props}
     >
-      <span className="sr-only">{label}</span>
+      {!decorative && <span className="sr-only">{label}</span>}
     </div>
   );
 }

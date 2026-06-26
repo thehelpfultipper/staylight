@@ -1,13 +1,24 @@
+import Link from "next/link";
 import { cn } from "@/lib/utils/cn";
 
 type ButtonVariant = "primary" | "secondary" | "ghost";
 type ButtonSize = "sm" | "md" | "lg";
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ButtonStyleOptions = {
   variant?: ButtonVariant;
   size?: ButtonSize;
   fullWidth?: boolean;
+  className?: string;
 };
+
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+  ButtonStyleOptions;
+
+export type LinkButtonProps = Omit<
+  React.ComponentProps<typeof Link>,
+  "className"
+> &
+  ButtonStyleOptions;
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
@@ -24,6 +35,22 @@ const sizeStyles: Record<ButtonSize, string> = {
   lg: "h-12 px-6 text-base",
 };
 
+export function buttonClassName({
+  variant = "primary",
+  size = "md",
+  fullWidth = false,
+  className,
+}: ButtonStyleOptions = {}) {
+  return cn(
+    "inline-flex items-center justify-center rounded-2xl font-medium tracking-tight transition-opacity",
+    "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground",
+    variantStyles[variant],
+    sizeStyles[size],
+    fullWidth && "w-full",
+    className,
+  );
+}
+
 export function Button({
   variant = "primary",
   size = "md",
@@ -39,17 +66,32 @@ export function Button({
       type={type}
       disabled={disabled}
       className={cn(
-        "inline-flex items-center justify-center rounded-2xl font-medium tracking-tight transition-opacity",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground",
-        variantStyles[variant],
-        sizeStyles[size],
-        fullWidth && "w-full",
+        buttonClassName({ variant, size, fullWidth, className }),
         disabled && "cursor-not-allowed",
-        className,
       )}
       {...props}
     >
       {children}
     </button>
+  );
+}
+
+export function LinkButton({
+  href,
+  variant = "primary",
+  size = "md",
+  fullWidth = false,
+  className,
+  children,
+  ...props
+}: LinkButtonProps) {
+  return (
+    <Link
+      href={href}
+      className={buttonClassName({ variant, size, fullWidth, className })}
+      {...props}
+    >
+      {children}
+    </Link>
   );
 }

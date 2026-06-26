@@ -48,6 +48,7 @@ export function SmartMatchBadge({ smartMatch, className }: SmartMatchBadgeProps)
         id={headingId}
         className={cn("text-sm font-semibold tracking-tight", tone.score)}
       >
+        <span className="sr-only">Match quality: </span>
         {label} · {score}%
       </p>
 
@@ -58,8 +59,8 @@ export function SmartMatchBadge({ smartMatch, className }: SmartMatchBadgeProps)
         >
           {visibleReasons.map((reason) => (
             <li key={reason} className="flex gap-2">
-              <span aria-hidden className="shrink-0 text-emerald-700">
-                ·
+              <span aria-hidden className="shrink-0 font-medium text-foreground">
+                +
               </span>
               <span>{reason}</span>
             </li>

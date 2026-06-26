@@ -45,7 +45,7 @@ export function ErrorState({
       <h3 className="text-base font-semibold tracking-tight text-foreground">
         {title}
       </h3>
-      <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted">
+      <p className="mt-2 max-w-sm text-sm leading-relaxed text-red-800/80">
         {message}
       </p>
       {onRetry && (

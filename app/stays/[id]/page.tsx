@@ -8,7 +8,7 @@ import { ReviewList } from "@/components/stays/ReviewList";
 import { SmartMatchBadge } from "@/components/stays/SmartMatchBadge";
 import { StayGallery } from "@/components/stays/StayGallery";
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
+import { LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { LoadingSkeleton } from "@/components/ui/LoadingSkeleton";
@@ -168,11 +168,9 @@ function BookingSidebar({
           <Badge variant="success">Free cancellation</Badge>
         )}
 
-        <Link href={checkoutHref}>
-          <Button variant="primary" size="lg" fullWidth>
-            Book now
-          </Button>
-        </Link>
+        <LinkButton href={checkoutHref} variant="primary" size="lg" fullWidth>
+          Book now
+        </LinkButton>
 
         <p className="text-center text-xs text-muted">
           You won&apos;t be charged — demo checkout only
@@ -184,16 +182,17 @@ function BookingSidebar({
 
 function StayDetailLoading() {
   return (
-    <div className="space-y-8" role="status" aria-label="Loading stay details">
-      <LoadingSkeleton className="aspect-[16/10] w-full rounded-3xl sm:aspect-[2/1]" />
+    <div className="space-y-8" role="status" aria-live="polite" aria-busy="true">
+      <span className="sr-only">Loading stay details</span>
+      <LoadingSkeleton decorative className="aspect-[16/10] w-full rounded-3xl sm:aspect-[2/1]" />
       <div className="grid gap-8 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
-          <LoadingSkeleton className="h-10 w-2/3" />
-          <LoadingSkeleton className="h-4 w-1/3" />
-          <LoadingSkeleton className="h-24 w-full" />
-          <LoadingSkeleton className="h-40 w-full rounded-3xl" />
+          <LoadingSkeleton decorative className="h-10 w-2/3" />
+          <LoadingSkeleton decorative className="h-4 w-1/3" />
+          <LoadingSkeleton decorative className="h-24 w-full" />
+          <LoadingSkeleton decorative className="h-40 w-full rounded-3xl" />
         </div>
-        <LoadingSkeleton className="h-72 w-full rounded-3xl" />
+        <LoadingSkeleton decorative className="h-72 w-full rounded-3xl" />
       </div>
     </div>
   );
@@ -477,7 +476,7 @@ function StayDetailContent() {
 
 export default function StayDetailPage() {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12 sm:px-8 sm:py-16">
+    <div className="page-container">
       <Suspense fallback={<StayDetailLoading />}>
         <StayDetailContent />
       </Suspense>

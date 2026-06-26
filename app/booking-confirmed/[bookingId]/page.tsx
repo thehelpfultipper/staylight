@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Badge } from "@/components/ui/Badge";
+import { LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { LoadingSkeleton } from "@/components/ui/LoadingSkeleton";
 import {
@@ -19,11 +19,13 @@ function ConfirmationLoading() {
     <div
       className="mx-auto max-w-xl space-y-6"
       role="status"
-      aria-label="Loading confirmation"
+      aria-live="polite"
+      aria-busy="true"
     >
-      <LoadingSkeleton className="mx-auto h-16 w-16 rounded-full" />
-      <LoadingSkeleton className="mx-auto h-10 w-2/3" />
-      <LoadingSkeleton className="h-64 w-full rounded-3xl" />
+      <span className="sr-only">Loading confirmation</span>
+      <LoadingSkeleton decorative className="mx-auto h-16 w-16 rounded-full" />
+      <LoadingSkeleton decorative className="mx-auto h-10 w-2/3" />
+      <LoadingSkeleton decorative className="h-64 w-full rounded-3xl" />
     </div>
   );
 }
@@ -143,18 +145,12 @@ function ConfirmationDetails() {
       </Card>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-        <Link
-          href="/"
-          className="inline-flex h-11 items-center justify-center rounded-2xl border border-border-strong bg-surface px-5 text-sm font-medium tracking-tight text-foreground transition-opacity hover:bg-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground sm:w-auto"
-        >
+        <LinkButton href="/" variant="secondary" className="sm:min-w-[140px]">
           Back to home
-        </Link>
-        <Link
-          href="/stays"
-          className="inline-flex h-11 items-center justify-center rounded-2xl bg-foreground px-5 text-sm font-medium tracking-tight text-background transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground sm:w-auto"
-        >
+        </LinkButton>
+        <LinkButton href="/stays" variant="primary" className="sm:min-w-[180px]">
           Browse more stays
-        </Link>
+        </LinkButton>
       </div>
     </div>
   );
@@ -186,7 +182,7 @@ function ConfirmationContent() {
 
 export default function BookingConfirmedPage() {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12 sm:px-8 sm:py-16">
+    <div className="page-container">
       <Suspense fallback={<ConfirmationLoading />}>
         <ConfirmationContent />
       </Suspense>
