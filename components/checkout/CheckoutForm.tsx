@@ -5,37 +5,8 @@ import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { cn } from "@/lib/utils/cn";
+import { storeBookingConfirmation } from "@/lib/utils/booking-storage";
 import type { ApiErrorBody, BookingConfirmation } from "@/types/api";
-
-const BOOKING_STORAGE_PREFIX = "staylight-booking-";
-
-export function storeBookingConfirmation(
-  confirmation: BookingConfirmation,
-): void {
-  sessionStorage.setItem(
-    `${BOOKING_STORAGE_PREFIX}${confirmation.bookingId}`,
-    JSON.stringify(confirmation),
-  );
-}
-
-export function loadBookingConfirmation(
-  bookingId: string,
-): BookingConfirmation | null {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  const raw = sessionStorage.getItem(`${BOOKING_STORAGE_PREFIX}${bookingId}`);
-  if (!raw) {
-    return null;
-  }
-
-  try {
-    return JSON.parse(raw) as BookingConfirmation;
-  } catch {
-    return null;
-  }
-}
 
 type CheckoutFormProps = {
   stayId: string;

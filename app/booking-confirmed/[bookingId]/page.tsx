@@ -1,9 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { Suspense, useSyncExternalStore } from "react";
+import { Suspense, useMemo, useSyncExternalStore } from "react";
 import { useParams } from "next/navigation";
-import { loadBookingConfirmation } from "@/components/checkout/CheckoutForm";
+import {
+  getBookingConfirmationSnapshot,
+  parseBookingConfirmation,
+  subscribeToBookingStorage,
+} from "@/lib/utils/booking-storage";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -21,17 +25,17 @@ function ConfirmationLoading() {
   );
 }
 
-function subscribeToBookingStorage(): () => void {
-  return () => {};
-}
-
 function ConfirmationContent() {
   const params = useParams<{ bookingId: string }>();
   const bookingId = params.bookingId;
-  const confirmation = useSyncExternalStore(
+  const confirmationRaw = useSyncExternalStore(
     subscribeToBookingStorage,
-    () => loadBookingConfirmation(bookingId),
+    () => getBookingConfirmationSnapshot(bookingId),
     () => null,
+  );
+  const confirmation = useMemo(
+    () => parseBookingConfirmation(confirmationRaw),
+    [confirmationRaw],
   );
 
   const hasSessionDetails = confirmation !== null;
