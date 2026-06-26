@@ -41,6 +41,6 @@ body {
 
 @layer utilities {
   .page-container {
-    @apply mx-auto w-full max-w-6xl px-6 py-12 sm:px-8 sm:py-16;
+    @apply mx-auto w-full max-w-6xl px-6 sm:px-8;
   }
 }

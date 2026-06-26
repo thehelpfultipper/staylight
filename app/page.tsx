@@ -59,11 +59,13 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="grid list-none gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {featuredStays.map((stay) => (
-            <StayPreviewCard key={stay.id} stay={stay} />
+            <li key={stay.id} className="h-full">
+              <StayPreviewCard stay={stay} />
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
       {/* Smart Match */}

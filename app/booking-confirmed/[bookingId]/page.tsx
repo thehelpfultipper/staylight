@@ -182,7 +182,7 @@ function ConfirmationContent() {
 
 export default function BookingConfirmedPage() {
   return (
-    <div className="page-container">
+    <div className="page-container py-12 sm:py-16">
       <Suspense fallback={<ConfirmationLoading />}>
         <ConfirmationContent />
       </Suspense>

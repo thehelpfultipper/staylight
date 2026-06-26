@@ -238,7 +238,7 @@ function CheckoutContent() {
 
 export default function CheckoutPage() {
   return (
-    <div className="page-container">
+    <div className="page-container py-12 sm:py-16">
       <Suspense fallback={<CheckoutLoading />}>
         <CheckoutContent />
       </Suspense>

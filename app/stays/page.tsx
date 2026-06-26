@@ -88,13 +88,13 @@ function BrowseResultsLoading() {
       {Array.from({ length: 6 }, (_, index) => (
         <div
           key={index}
-          className="overflow-hidden rounded-3xl border border-border bg-surface shadow-soft"
+          className="flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-surface shadow-soft"
         >
-          <LoadingSkeleton decorative className="aspect-[4/3] rounded-none" />
-          <div className="space-y-3 p-6">
+          <LoadingSkeleton decorative className="aspect-[4/3] shrink-0 rounded-none" />
+          <div className="flex flex-1 flex-col gap-3 p-6">
             <LoadingSkeleton decorative className="h-5 w-2/3" />
             <LoadingSkeleton decorative className="h-4 w-1/2" />
-            <LoadingSkeleton decorative className="h-16 w-full" />
+            <LoadingSkeleton decorative className="mt-auto h-16 w-full" />
           </div>
         </div>
       ))}
@@ -375,7 +375,7 @@ function StaysBrowseResultsContent() {
         aria-label="All stays"
       >
         {stays.map((stay) => (
-          <li key={stay.id}>
+          <li key={stay.id} className="h-full">
             <StayPreviewCard
               stay={stay}
               searchHref={`/stays/${stay.id}`}
@@ -393,7 +393,7 @@ function StaysPageContent() {
   const queryString = searchParams.toString();
 
   return (
-    <div className="page-container">
+    <div className="page-container py-12 sm:py-16">
       <header className="mb-10">
         {isSearchMode ? (
           <>

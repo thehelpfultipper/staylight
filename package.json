@@ -1,7 +1,13 @@
 {
   "name": "staylight",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "private": false,
+  "author": "Klea Merkuri",
+  "homepage": "https://github.com/thehelpfultipper/staylight",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thehelpfultipper/staylight.git"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

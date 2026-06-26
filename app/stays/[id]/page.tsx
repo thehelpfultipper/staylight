@@ -476,7 +476,7 @@ function StayDetailContent() {
 
 export default function StayDetailPage() {
   return (
-    <div className="page-container">
+    <div className="page-container py-12 sm:py-16">
       <Suspense fallback={<StayDetailLoading />}>
         <StayDetailContent />
       </Suspense>

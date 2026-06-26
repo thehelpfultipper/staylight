@@ -3,7 +3,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 
 export default function BookingConfirmedIndexPage() {
   return (
-    <div className="page-container">
+    <div className="page-container py-12 sm:py-16">
       <EmptyState
         title="No booking reference provided"
         description="Open a confirmation link from your completed checkout, or start a new search."

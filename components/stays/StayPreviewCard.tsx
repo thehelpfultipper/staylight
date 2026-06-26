@@ -26,10 +26,13 @@ export function StayPreviewCard({ stay, searchHref }: StayPreviewCardProps) {
     <Link
       href={href}
       aria-label={`View ${stay.name} in ${stay.city}`}
-      className="group block focus-visible:outline-none"
+      className="group block h-full focus-visible:outline-none"
     >
-      <Card padding="none" className="overflow-hidden transition-shadow hover:shadow-soft-lg">
-        <div className="relative aspect-[4/3] overflow-hidden bg-border">
+      <Card
+        padding="none"
+        className="flex h-full flex-col overflow-hidden transition-shadow hover:shadow-soft-lg"
+      >
+        <div className="relative aspect-[4/3] shrink-0 overflow-hidden bg-border">
           {stay.imageUrl ? (
             <Image
               src={stay.imageUrl}
@@ -48,13 +51,13 @@ export function StayPreviewCard({ stay, searchHref }: StayPreviewCardProps) {
           )}
         </div>
 
-        <div className="space-y-3 p-6">
-          <div className="flex items-start justify-between gap-3">
+        <div className="flex flex-1 flex-col gap-3 p-6">
+          <div className="flex min-h-14 items-start justify-between gap-3">
             <div className="min-w-0">
               <h3 className="truncate text-base font-semibold tracking-tight text-foreground group-hover:opacity-80">
                 {stay.name}
               </h3>
-              <p className="mt-0.5 text-sm text-muted">
+              <p className="mt-0.5 truncate text-sm text-muted">
                 {stay.city}, {stay.country}
               </p>
             </div>
@@ -68,11 +71,11 @@ export function StayPreviewCard({ stay, searchHref }: StayPreviewCardProps) {
             </div>
           </div>
 
-          <p className="line-clamp-2 text-sm leading-relaxed text-muted">
+          <p className="line-clamp-2 min-h-[2.875rem] text-sm leading-relaxed text-muted">
             {stay.description}
           </p>
 
-          <div className="flex items-center justify-between gap-3 pt-1">
+          <div className="mt-auto flex items-center justify-between gap-3 pt-1">
             <Badge variant="muted">{STAY_TYPE_LABELS[stay.stayType]}</Badge>
             <p className="text-sm font-medium tabular-nums text-foreground">
               {formatCurrency(stay.pricePerNight)}

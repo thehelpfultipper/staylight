@@ -8,7 +8,7 @@ export function AppFooter() {
           demonstration only.
         </p>
         <p className="text-xs text-muted">
-          &copy; {new Date().getFullYear()} Staylight. All rights reserved.
+          &copy; {new Date().getFullYear()} Staylight by <a href="https://thehelpfultipper.com/kleamerkuri/" className="text-primary underline">Klea Merkuri</a> for  Lateral Group. All rights reserved.
         </p>
       </div>
     </footer>
