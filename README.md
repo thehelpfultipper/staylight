@@ -6,8 +6,8 @@ Built with **Next.js App Router**, **React**, **TypeScript**, and **Tailwind CSS
 
 ## Live demo
 
-<!-- Replace with your deployed URL after publishing to Vercel -->
-**Coming soon:** [https://staylight.vercel.app](https://staylight.vercel.app)
+<!-- Replace with your deployed URL after publishing -->
+**Coming soon:** add your Vercel or Render URL here
 
 ## Core features
 
@@ -112,12 +112,17 @@ npm run test:watch    # watch mode during development
 GitHub Actions runs on every **push** and **pull request** (`.github/workflows/ci.yml`):
 
 1. Checkout
-2. Setup Node 22
+2. Setup Node 22 (npm cache keyed on `package-lock.json`)
 3. `npm ci`
-4. `npm run lint`
-5. `npm run typecheck`
-6. `npm run test`
-7. `npm run build`
+4. Restore Next.js build cache (`.next/cache`) when source and lockfile are unchanged
+5. `npm run lint`
+6. `npm run typecheck`
+7. `npm run test`
+8. `npm run build`
+
+**Note:** CI validates the project; it does not deploy. A `concurrency` group cancels redundant runs when the same branch or PR receives new commits quickly.
+
+CI and Render (or Vercel) build independently — green CI means Render’s `npm run build` step is very likely to succeed, but Render still runs its own install and build on deploy.
 
 ## Local setup
 
@@ -153,7 +158,30 @@ npm run build
 
 ## Deployment
 
-**Vercel** is the recommended host for this Next.js app.
+Staylight works on any Node host that runs `npm run build` then `npm start`. **No environment variables are required** — the app uses seeded mock data only.
+
+### Render (recommended for this repo)
+
+The repo includes [`render.yaml`](render.yaml) and [`.node-version`](.node-version) (Node 22) so Render can pick up settings automatically.
+
+1. Push the repository to GitHub.
+2. Sign in to [Render](https://render.com) and click **New → Blueprint** (or **New → Web Service**).
+3. Connect the Staylight GitHub repository.
+4. If using Blueprint, Render reads `render.yaml`:
+   - **Build command:** `npm ci && npm run build`
+   - **Start command:** `npm start`
+   - **Node version:** 22
+5. If configuring manually instead:
+   - Runtime: **Node**
+   - Build command: `npm ci && npm run build`
+   - Start command: `npm start`
+   - Node version: **22** (or rely on `.node-version`)
+6. **No environment variables are required.**
+7. Click **Deploy**. Render rebuilds from source on each push to `main` (independent of GitHub Actions).
+
+After deployment, update the live demo link at the top of this README with your Render URL.
+
+### Vercel
 
 1. Push the repository to GitHub.
 2. Sign in to [Vercel](https://vercel.com) and click **Add New → Project**.
@@ -161,10 +189,8 @@ npm run build
 4. Framework preset: **Next.js** (auto-detected).
 5. Build command: `npm run build` (default).
 6. Output directory: leave as default (`.next`).
-7. **No environment variables are required** — the app uses seeded mock data only.
+7. **No environment variables are required.**
 8. Click **Deploy**.
-
-After deployment, update the live demo link at the top of this README with your Vercel URL.
 
 ## Known limitations
 
@@ -186,4 +212,5 @@ lib/smart-match/     Fit scoring engine
 lib/utils/           Shared helpers
 tests/               Vitest unit and service tests
 types/               Shared TypeScript types
+render.yaml          Render Blueprint (deploy config)
 ```
