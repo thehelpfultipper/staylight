@@ -243,8 +243,43 @@ function StayDetailContent() {
   }, [stayId]);
 
   useEffect(() => {
-    void loadStay();
-  }, [loadStay]);
+    let cancelled = false;
+
+    void (async () => {
+      try {
+        const response = await fetch(`/api/stays/${stayId}`);
+
+        if (cancelled) {
+          return;
+        }
+
+        if (!response.ok) {
+          const body = (await response.json()) as ApiErrorBody;
+          throw new Error(body.error ?? "Could not load stay");
+        }
+
+        const body = (await response.json()) as { data: Stay };
+        setStay(body.data);
+        setReviews(body.data.reviews);
+        setStatus("success");
+      } catch (error) {
+        if (cancelled) {
+          return;
+        }
+
+        setStay(null);
+        setReviews([]);
+        setErrorMessage(
+          error instanceof Error ? error.message : "Could not load stay",
+        );
+        setStatus("error");
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [stayId]);
 
   const smartMatch = useMemo(() => {
     if (!stay || (budget === undefined && !tripType)) {
