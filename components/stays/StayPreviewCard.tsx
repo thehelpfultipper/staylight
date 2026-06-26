@@ -20,9 +20,7 @@ type StayPreviewCardProps = {
 };
 
 export function StayPreviewCard({ stay, searchHref }: StayPreviewCardProps) {
-  const href =
-    searchHref ??
-    `/stays?destination=${encodeURIComponent(stay.city)}&guests=2&tripType=leisure`;
+  const href = searchHref ?? `/stays/${stay.id}`;
 
   return (
     <Link
