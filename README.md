@@ -6,8 +6,7 @@ Built with **Next.js App Router**, **React**, **TypeScript**, and **Tailwind CSS
 
 ## Live demo
 
-<!-- Replace with your deployed URL after publishing -->
-**Coming soon:** add your Vercel or Render URL here
+Render: [staylight.onrender.com](https://staylight.onrender.com)
 
 ## Core features
 
