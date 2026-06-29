@@ -57,9 +57,22 @@ Search results are ranked by Smart Match score before being returned to the clie
 Principles:
 
 - Client components fetch via API routes — no direct seed imports in the browser
-- Services never import React
+- Services never import React; prefer plain functions over classes — no repository pattern, DI, or ORM
+- Use server components where data fetching is straightforward; client components for interactivity
 - Consistent API errors: `{ error: string }` with appropriate HTTP status
 - Request logging via `lib/utils/logger.ts`
+
+### Design & trade-offs
+
+Staylight targets a **premium minimalist** aesthetic — warm off-white surfaces, generous spacing, large rounded corners, and restrained typography. Visual guidance lives in `.cursor/rules/design-system.mdc`.
+
+| Decision | Choice | Why |
+|---|---|---|
+| Data | Seeded in-memory modules | Zero env vars, simple deploy, no database setup |
+| Backend | Next.js API route handlers | Single codebase; services stay thin and testable |
+| Differentiator | Rule-based Smart Match | Explainable fit scores without AI cost or complexity |
+| Payments & auth | Mocked / omitted | Demo scope — full booking flow without real integrations |
+| Maps & external APIs | Deferred by default | Keeps the app self-contained; see roadmap for a stylized map option |
 
 ## API endpoints
 
@@ -121,7 +134,7 @@ GitHub Actions runs on every **push** and **pull request** (`.github/workflows/c
 
 **Note:** CI validates the project; it does not deploy. A `concurrency` group cancels redundant runs when the same branch or PR receives new commits quickly.
 
-CI and Render (or Vercel) build independently — green CI means Render’s `npm run build` step is very likely to succeed, but Render still runs its own install and build on deploy.
+CI and Render build independently — green CI means Render’s `npm run build` step is very likely to succeed, but Render still runs its own install and build on deploy.
 
 ## Local setup
 
@@ -159,7 +172,7 @@ npm run build
 
 Staylight works on any Node host that runs `npm run build` then `npm start`. **No environment variables are required** — the app uses seeded mock data only.
 
-### Render (recommended for this repo)
+### Render
 
 The repo includes [`render.yaml`](render.yaml) and [`.node-version`](.node-version) (Node 22) so Render can pick up settings automatically.
 
@@ -180,17 +193,6 @@ The repo includes [`render.yaml`](render.yaml) and [`.node-version`](.node-versi
 
 After deployment, update the live demo link at the top of this README with your Render URL.
 
-### Vercel
-
-1. Push the repository to GitHub.
-2. Sign in to [Vercel](https://vercel.com) and click **Add New → Project**.
-3. Import the Staylight GitHub repository.
-4. Framework preset: **Next.js** (auto-detected).
-5. Build command: `npm run build` (default).
-6. Output directory: leave as default (`.next`).
-7. **No environment variables are required.**
-8. Click **Deploy**.
-
 ## Known limitations
 
 - **Seeded data only** — no real database; server-side data resets on restart
@@ -199,6 +201,23 @@ After deployment, update the live demo link at the top of this README with your 
 - **No real payment processing** — Stripe and similar integrations are out of scope
 - **No external travel APIs** — destinations and availability are mock content
 - **Session-scoped mutations** — new reviews and bookings persist in memory; booking confirmation also uses browser session storage for the current session
+- **Basic gallery** — stay detail uses a hero image and thumbnail strip; seed data has few photos per stay
+- **Browse mode is minimal** — `/stays` without search params lists all stays with no filter or sort controls
+- **No map visualization** — location is text and distance-from-center only
+
+## Roadmap (with more time)
+
+These items are **documented for future work only** — not yet implemented. Suggested priority order:
+
+1. **Rich image gallery** — Expand seed photos (outdoor, indoor, room categories); add lightbox, keyboard navigation, and a “View all photos” grid on stay detail. Listing cards would show richer cover imagery.
+
+2. **Browse filters and sorting on `/stays`** — Filter by city or country; sort by popularity (rating and review count), price, or distance. Search results could also expose a user-selectable sort (Smart Match, price, rating).
+
+3. **Smart Match Explore** — A lighter discovery flow for users who know budget, trip type, or occasion (e.g. anniversary, conference) but not a specific destination or dates. Rule-based recommendations only — an extension of Smart Match, not AI.
+
+4. **Stylized location map** — Add latitude/longitude to seed data and render a premium static neighborhood map on stay detail (and optionally search). Avoids external map API keys while still conveying where a stay sits relative to the city center.
+
+**Smaller enhancements** that reuse existing logic: “Similar stays” on the detail page (same city, trip type, price band) and a search-results sort toggle.
 
 ## Project structure
 

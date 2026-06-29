@@ -1,0 +1,3 @@
+# A short note
+
+I used AI as a planning and execution support tool rather than letting it blindly generate the project. I first used it to research common travel booking patterns, narrow the scope, and decide on one lightweight differentiator: the rule-based Smart Match feature. From there, I used AI to turn the requirements into an implementation plan, then into ordered tasks, and finally into compact Cursor prompts to reduce back and forth and stay within the 4-6 hour target. The main guardrails were to avoid over-engineering, avoid payments/auth/external APIs, keep the backend seeded and mock-based, and make sure the final app still showed clear architecture, state handling, tests, CI, and a polished user experience.
