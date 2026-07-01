@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
+import { useReviewForm } from "@/lib/hooks/useReviewForm";
 import { cn } from "@/lib/utils/cn";
-import type { ApiErrorBody } from "@/types/api";
 import type { Review } from "@/types/review";
 
 type ReviewFormProps = {
@@ -13,97 +12,21 @@ type ReviewFormProps = {
   onReviewAdded: (review: Review) => void;
 };
 
-type FormFields = {
-  name: string;
-  rating: string;
-  comment: string;
-};
-
-type FieldErrors = Partial<Record<keyof FormFields, string>>;
-
 const RATING_OPTIONS = [5, 4, 3, 2, 1].map((value) => ({
   value: String(value),
   label: `${value} star${value === 1 ? "" : "s"}`,
 }));
 
-function validateFields(fields: FormFields): FieldErrors {
-  const errors: FieldErrors = {};
-  const name = fields.name.trim();
-  const comment = fields.comment.trim();
-  const rating = Number(fields.rating);
-
-  if (name.length < 2) {
-    errors.name = "Name must be at least 2 characters";
-  }
-
-  if (!fields.rating) {
-    errors.rating = "Please select a rating";
-  } else if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
-    errors.rating = "Rating must be between 1 and 5";
-  }
-
-  if (comment.length < 10) {
-    errors.comment = "Comment must be at least 10 characters";
-  }
-
-  return errors;
-}
-
 export function ReviewForm({ stayId, onReviewAdded }: ReviewFormProps) {
-  const [fields, setFields] = useState<FormFields>({
-    name: "",
-    rating: "",
-    comment: "",
-  });
-  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
-  const [submitError, setSubmitError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setSubmitError("");
-    setSuccessMessage("");
-
-    const errors = validateFields(fields);
-    setFieldErrors(errors);
-
-    if (Object.keys(errors).length > 0) {
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch("/api/reviews", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          stayId,
-          name: fields.name.trim(),
-          rating: Number(fields.rating),
-          comment: fields.comment.trim(),
-        }),
-      });
-
-      if (!response.ok) {
-        const body = (await response.json()) as ApiErrorBody;
-        throw new Error(body.error ?? "Could not submit review");
-      }
-
-      const body = (await response.json()) as { data: Review };
-      onReviewAdded(body.data);
-      setFields({ name: "", rating: "", comment: "" });
-      setFieldErrors({});
-      setSuccessMessage("Thank you — your review has been posted.");
-    } catch (error) {
-      setSubmitError(
-        error instanceof Error ? error.message : "Could not submit review",
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
+  const {
+    fields,
+    setFields,
+    fieldErrors,
+    submitError,
+    successMessage,
+    isSubmitting,
+    handleSubmit,
+  } = useReviewForm({ stayId, onReviewAdded });
 
   return (
     <form

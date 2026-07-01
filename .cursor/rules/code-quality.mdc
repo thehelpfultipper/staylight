@@ -1,0 +1,49 @@
+---
+description: Component structure and data-fetching guardrails for Staylight
+globs: ["components/**/*.tsx", "app/**/*.tsx"]
+alwaysApply: false
+---
+
+# Component Structure Rules
+
+Scope: `components/` and `app/` pages/layouts — not `app/api/`.
+
+When checking the 150-line limit, count lines excluding blank lines and comments.
+
+## God Components
+
+A component file over 150 lines is doing too much.
+Before adding code to an existing component, check the line count.
+If it's over 150, split first — then add.
+
+Splitting pattern:
+
+- Rendering logic → its own component in the same folder
+- Validation / pure helpers → a sibling `*-validation.ts` or `*-helpers.ts` module
+- Data fetching → a server component or a hook in `lib/hooks/`
+- Shared UI state → a custom hook
+
+## State Soup
+
+More than 3 `useState` calls in one component is a warning sign.
+Before adding a fourth, ask: do any of these pieces of state always change together?
+If yes, they belong in a custom hook in `lib/hooks/`, not in the component.
+
+Hook naming: `useFeatureName.ts` — one file per hook.
+
+## Data Fetching
+
+Staylight uses the Next.js App Router. That means:
+
+- If the component doesn't need user interaction, make it a server component —
+  no `"use client"`, `async function`, fetch data via `lib/services/` in the component body
+- If it needs client-side data (e.g. after user action), the fetch belongs in a custom hook
+  in `lib/hooks/`, not in `useEffect` inside the component
+- `useEffect` + `fetch()` together in a component is the wrong pattern for this project
+
+Client wrappers are fine for small interactive islands (forms, retry buttons, session storage).
+
+## Service Layer
+
+Files in `lib/services/` and `lib/utils/` are plain TypeScript.
+Never import React, hooks, or JSX in these files.
